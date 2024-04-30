@@ -20,6 +20,8 @@ New features:
 * Customized player colors can now be saved to a file for later use, or shared with other players.
 * Added optional Trap Chests that will damage you instead of giving you an item.
 * You can now carry enemy weapons through doors.
+* Added a Hero Mode difficulty option that causes you to take four times more damage than normal, and prevents heart refills from dropping.
+* You can now choose to start the game with only one or two Heart Containers, instead of the usual three.
 
 Changes:
 * Dungeon bosses can no longer drop dungeon items when Key-Lunacy mode is disabled.
@@ -42,9 +44,7 @@ Bug fixes:
 * Fixed a bug in the vanilla code where you could not defend using the Skull Hammer if you didn't own a shield.
 * Fixed a rare vanilla bug that could cause Zelda to become temporarily frozen during the fight against Ganondorf. The bug occurred if you managed to reflect one of Zelda's Light Arrows back at Ganondorf during the first phase of the fight instead of the third one, while locked on to Ganondorf, and his HP was low enough to enter the second phase of the fight upon being hit.
 * Fixed a vanilla softlock that could occur when using glitches during the Helmaroc King fight.
-
-Supported operating systems:
-* The Linux release builds now support systems with at least glibc version 2.31 (e.g. Ubuntu 20.04 is now supported).
+* Fixed a vanilla bug where opening certain chests while holding an enemy weapon would cause the weapon to teleport up into the air or out of bounds.
 
 ### Version 1.10.0 (released 2023-01-06)
 

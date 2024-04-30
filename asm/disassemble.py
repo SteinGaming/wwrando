@@ -2,11 +2,12 @@
 from subprocess import call
 from subprocess import DEVNULL
 import os
+import sys
 import re
 from io import BytesIO
 
 from gclib import fs_helpers as fs
-from gclib.yaz0 import Yaz0
+from gclib.yaz0_yay0 import Yaz0
 from gclib.rel import REL
 from wwrando_paths import ASM_PATH
 
@@ -15,8 +16,22 @@ def simplify_filename(filename):
     filename = filename[len("d_a_"):]
   return filename
 
+def devkitpath() -> str:
+  if sys.platform == "win32":
+    return r"C:\devkitPro\devkitPPC\bin"
+  else:
+    if "DEVKITPPC" not in os.environ:
+      raise Exception(r"Could not find devkitPPC. Path to devkitPPC should be in the DEVKITPPC env var")
+    return os.environ["DEVKITPPC"] + "/bin"
+
+def get_bin(name):
+  if sys.platform != "win32":
+    return os.path.join(devkitpath(), name)
+  return os.path.join(devkitpath(), name + ".exe")
+
+
 def disassemble_all_code(self):
-  if not os.path.isfile(r"C:\devkitPro\devkitPPC\bin\powerpc-eabi-objdump.exe"):
+  if not os.path.isfile(get_bin("powerpc-eabi-objdump")):
     raise Exception(r"Failed to disassemble code: Could not find devkitPPC. devkitPPC should be installed to: C:\devkitPro\devkitPPC")
   
   rels_arc = self.get_arc("files/RELS.arc")
@@ -33,6 +48,10 @@ def disassemble_all_code(self):
     framework_map_contents = self.gcm.read_file_data("files/maps/framework.map")
   framework_map_contents = fs.read_all_bytes(framework_map_contents).decode("ascii")
   main_symbols = get_main_symbols(framework_map_contents)
+  # Copy the map file to the output directory
+  framework_map_path = os.path.join(out_dir, "framework.map")
+  with open(framework_map_path, "w") as f:
+    f.write(framework_map_contents)
   
   
   all_rel_paths = get_list_of_all_rels(self)
@@ -106,7 +125,7 @@ def disassemble_all_code(self):
 
 def disassemble_file(bin_path, asm_path):
   command = [
-    r"C:\devkitPro\devkitPPC\bin\powerpc-eabi-objdump.exe",
+    get_bin("powerpc-eabi-objdump"),
     "--disassemble-zeroes",
     "-m", "powerpc",
     "-D",
@@ -226,7 +245,7 @@ def add_relocations_and_symbols_to_rel(asm_path, rel_path, file_path_in_gcm, mai
     
     out_str += "\n"
     
-    if line.endswith("blr"):
+    if line.rstrip(" ").endswith("blr"):
       out_str += "\n" # Separate functions
   with open(asm_path, "w", encoding="shift-jis") as f:
     f.write(out_str)
@@ -234,27 +253,54 @@ def add_relocations_and_symbols_to_rel(asm_path, rel_path, file_path_in_gcm, mai
 ALL_LOAD_OR_STORE_OPCODES = [
   "lbz",
   "lbzu",
+  "lbzx",
+  "lbzux",
   "stb",
+  "stbu",
+  "stbx",
+  "stbux",
   
   "lha",
   "lhau",
+  "lhax",
+  "lhaux",
   "lhz",
   "lhzu",
+  "lhzx",
+  "lhzux",
   "sth",
   "sthu",
+  "sthx",
+  "sthux",
   
-  "lmw",
   "lwz",
   "lwzu",
+  "lwzx",
+  "lwzux",
   "stw",
   "stwu",
+  "stwx",
+  "stwux",
+  
+  "lmw",
+  "stmw",
   
   "lfs",
   "lfsu",
+  "lfsx",
+  "lfsux",
   "lfd",
   "lfdu",
+  "lfdx",
+  "lfdux",
   "stfs",
+  "stfsu",
+  "stfsx",
+  "stfsux",
   "stfd",
+  "stfdu",
+  "stfdx",
+  "stfdux",
 ]
 
 def add_symbols_to_main(self, asm_path, main_symbols):
@@ -384,7 +430,7 @@ def add_symbols_to_main(self, asm_path, main_symbols):
       
       out_str += "\n"
       
-      if line.endswith("blr"):
+      if line.rstrip(" ").endswith("blr"):
         out_str += "\n" # Separate functions
   with open(asm_path, "w", encoding="shift-jis") as f:
     f.write(out_str)
@@ -503,10 +549,12 @@ def get_extra_comment_for_asm_line(line):
   rlwinm_match = re.search(r"^.+ \t(?:rlwinm\.?)\s+(r\d+),(r\d+),(\d+),(\d+),(\d+)$", line, re.IGNORECASE)
   clrlwi_match = re.search(r"^.+ \t(?:clrlwi\.?)\s+(r\d+),(r\d+),(\d+)$", line, re.IGNORECASE)
   rotlwi_match = re.search(r"^.+ \t(?:rotlwi\.?)\s+(r\d+),(r\d+),(\d+)$", line, re.IGNORECASE)
-  
   rlwimi_match = re.search(r"^.+ \t(?:rlwimi\.?)\s+(r\d+),(r\d+),(\d+),(\d+),(\d+)$", line, re.IGNORECASE)
+  clrrwi_match = re.search(r"^.+ \t(?:clrrwi\.?)\s+(r\d+),(r\d+),(\d+)$", line, re.IGNORECASE)
+  slwi_match = re.search(r"^.+ \t(?:slwi\.?)\s+(r\d+),(r\d+),(\d+)$", line, re.IGNORECASE)
+  srwi_match = re.search(r"^.+ \t(?:srwi\.?)\s+(r\d+),(r\d+),(\d+)$", line, re.IGNORECASE)
   
-  if rlwinm_match or clrlwi_match or rotlwi_match or rlwimi_match:
+  if rlwinm_match or clrlwi_match or rotlwi_match or rlwimi_match or clrrwi_match or slwi_match or srwi_match:
     if rlwinm_match:
       dst_reg = rlwinm_match.group(1)
       src_reg = rlwinm_match.group(2)
@@ -531,6 +579,24 @@ def get_extra_comment_for_asm_line(line):
       l_shift = int(rlwimi_match.group(3))
       first_mask_bit = int(rlwimi_match.group(4))
       last_mask_bit = int(rlwimi_match.group(5))
+    elif clrrwi_match:
+      dst_reg = clrrwi_match.group(1)
+      src_reg = clrrwi_match.group(2)
+      l_shift = 0
+      first_mask_bit = 0
+      last_mask_bit = 31 - int(clrrwi_match.group(3))
+    elif slwi_match:
+      dst_reg = slwi_match.group(1)
+      src_reg = slwi_match.group(2)
+      l_shift = int(slwi_match.group(3))
+      first_mask_bit = 0
+      last_mask_bit = 31 - l_shift
+    elif srwi_match:
+      dst_reg = srwi_match.group(1)
+      src_reg = srwi_match.group(2)
+      l_shift = 32 - int(srwi_match.group(3))
+      first_mask_bit = 32 - l_shift
+      last_mask_bit = 31
     else:
       raise Exception("Unknown rotate left opcode")
     
