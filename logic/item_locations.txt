@@ -816,8 +816,8 @@ Forest Haven - Small Island Chest:
   Types: Island Puzzle
   Paths:
     - sea/Room41.arc/Chest000
-Hollo's Forest Potion Shop:
-  Need: Can Access Forest Haven
+Forest Haven - Hollo's Forest Potion Shop:
+  Need: Can Access Forest Haven & Grappling Hook & Spoils Bag 
   Original item: Blue Potion
   Types: Spoils Trading
   Paths:
