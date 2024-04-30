@@ -46,7 +46,7 @@ from randomizers.items import ItemRandomizer
 from randomizers.charts import ChartRandomizer
 from randomizers.starting_island import StartingIslandRandomizer
 from randomizers.entrances import EntranceRandomizer 
-# from randomizers import music # Unfinished and needs to be rewritten from scratch
+from randomizers import music # Unfinished and needs to be rewritten from scratch
 from randomizers.enemies import EnemyRandomizer
 from randomizers.palettes import PaletteRandomizer
 from randomizers.boss_reqs import RequiredBossesRandomizer
@@ -326,6 +326,8 @@ class WWRandomizer:
         patcher.apply_patch(self, "remove_music")
       if self.options.hero_mode:
         tweaks.enable_hero_mode(self)
+        
+      music.randomize_music(self, self.get_new_rng())
       
       if self.map_select:
         patcher.apply_patch(self, "map_select")

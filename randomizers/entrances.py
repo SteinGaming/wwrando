@@ -445,6 +445,8 @@ class EntranceRandomizer(BaseRandomizer):
           if dungeon_name in self.rando.boss_reqs.banned_dungeons:
             self.banned_exits.append(zone_exit)
     
+    print(self.banned_exits)
+    
     self.islands_with_a_banned_dungeon.clear()
     
     doing_progress_entrances_for_dungeons_and_caves_only_start = False

@@ -301,3 +301,6 @@ Five-Eye Reef - Destroy the Cannons:
 Six-Eye Reef - Destroy the Cannons and Gunboats:
   Type: Standard
   Text: ravaging the six-eyed reef
+Hollo's Forest Potion Shop:
+  Type: Standard
+  Text: PENNISSSSSS!!!11!

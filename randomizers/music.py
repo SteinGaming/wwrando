@@ -3,7 +3,7 @@ from gclib import fs_helpers as fs
 
 from randomizers.music_constants import *
 
-def randomize_music(self):
+def randomize_music(self, rng):
   stage_bgm_info_list_start = 0x8039C30C
   island_bgm_info_list_start = 0x8039C4F0
   
@@ -212,7 +212,7 @@ def randomize_music(self):
     if new_possible_bgm_names_not_used_yet:
       new_possible_bgm_names = new_possible_bgm_names_not_used_yet
     
-    new_bgm_name = self.rng.choice(new_possible_bgm_names)
+    new_bgm_name = rng.choice(new_possible_bgm_names)
     
     orig_bgm_index = bgm_name_to_index[orig_bgm_name]
     new_bgm_index = bgm_name_to_index[new_bgm_name]

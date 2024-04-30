@@ -1,0 +1,44 @@
+diff --git a/randomizer.py b/randomizer.py
+index 72fc9e6..1aed4a4 100644
+--- a/randomizer.py
++++ b/randomizer.py
+@@ -46,7 +46,7 @@ from randomizers.items import ItemRandomizer
+ from randomizers.charts import ChartRandomizer
+ from randomizers.starting_island import StartingIslandRandomizer
+ from randomizers.entrances import EntranceRandomizer 
+-# from randomizers import music # Unfinished and needs to be rewritten from scratch
++from randomizers import music # Unfinished and needs to be rewritten from scratch
+ from randomizers.enemies import EnemyRandomizer
+ from randomizers.palettes import PaletteRandomizer
+ from randomizers.boss_reqs import RequiredBossesRandomizer
+@@ -326,6 +326,8 @@ class WWRandomizer:
+         patcher.apply_patch(self, "remove_music")
+       if self.options.hero_mode:
+         tweaks.enable_hero_mode(self)
++        
++      music.randomize_music(self, self.get_new_rng())
+       
+       if self.map_select:
+         patcher.apply_patch(self, "map_select")
+diff --git a/randomizers/music.py b/randomizers/music.py
+index aeab306..61826be 100644
+--- a/randomizers/music.py
++++ b/randomizers/music.py
+@@ -3,7 +3,7 @@ from gclib import fs_helpers as fs
+ 
+ from randomizers.music_constants import *
+ 
+-def randomize_music(self):
++def randomize_music(self, rng):
+   stage_bgm_info_list_start = 0x8039C30C
+   island_bgm_info_list_start = 0x8039C4F0
+   
+@@ -212,7 +212,7 @@ def randomize_music(self):
+     if new_possible_bgm_names_not_used_yet:
+       new_possible_bgm_names = new_possible_bgm_names_not_used_yet
+     
+-    new_bgm_name = self.rng.choice(new_possible_bgm_names)
++    new_bgm_name = rng.choice(new_possible_bgm_names)
+     
+     orig_bgm_index = bgm_name_to_index[orig_bgm_name]
+     new_bgm_index = bgm_name_to_index[new_bgm_name]

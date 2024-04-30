@@ -816,11 +816,12 @@ Forest Haven - Small Island Chest:
   Types: Island Puzzle
   Paths:
     - sea/Room41.arc/Chest000
-#Hollo's Forest Potion Shop:
-#  Need: Can Access Forest Haven
-#  Original item: Blue Potion
-#  Paths:
-#    - Ocrogh/Stage.arc/Event03F:Get_Blu_Btl/Actor002/Action001
+Hollo's Forest Potion Shop:
+  Need: Can Access Forest Haven
+  Original item: Blue Potion
+  Types: Spoils Trading
+  Paths:
+    - Ocrogh/Stage.arc/Event03F:Get_Blu_Btl/Actor002/Action001
 
 Forbidden Woods - First Room:
   Need: Can Access Forbidden Woods
@@ -1154,16 +1155,22 @@ Tower of the Gods - Big Key Chest:
   Types: Dungeon
   Paths:
     - Siren/Stage.arc/Chest00B
-#Tower of the Gods - Gohdan - Arrow Refill:
-#  Need: 
-#  Original item: 10 Arrows (Pickup)
-#  Paths:
-#    - rels/d_a_bst.rel@5CA7
-#Tower of the Gods - Gohdan - Bomb Refill:
-#  Need: 
-#  Original item: 5 Bombs (Pickup)
-#  Paths:
-#    - rels/d_a_bst.rel@5CD3
+Tower of the Gods - Gohdan - Arrow Refill:
+  Need: 
+    Can Access Gohdan Boss Arena
+    & Can Defeat Gohdan
+  Original item: 10 Arrows (Pickup)
+  Types: Dungeon
+  Paths:
+    - rels/d_a_bst.rel@5CA7
+Tower of the Gods - Gohdan - Bomb Refill:
+  Need: 
+    Can Access Gohdan Boss Arena
+    & Can Defeat Gohdan
+  Original item: 5 Bombs (Pickup)
+  Types: Dungeon
+  Paths:
+    - rels/d_a_bst.rel@5CD3
 Tower of the Gods - Gohdan Heart Container:
   Need:
     Can Access Gohdan Boss Arena
@@ -2244,11 +2251,21 @@ Northern Fairy Island - Submarine:
 
 #Tingle Island - Ankle - Reward for 1 Tingle Statue:
 #  Need: 
+#    Dragon Tingle Statue
+#    | Forbidden Tingle Statue
+#    | Goddess Tingle Statue
+#    | Earth Tingle Statue
+#    | Wind Tingle Statue
 #  Original item: 50 Rupees, reward for finding 1 Tingle Statue
 #  Paths:
 #    - rels/d_a_npc_tc.rel@617F
 #Tingle Island - Ankle - Reward for 2 Tingle Statues:
-#  Need: 
+#  Need:
+#    Dragon Tingle Statue
+#    & Forbidden Tingle Statue
+#    & Goddess Tingle Statue
+#    & Earth Tingle Statue
+#    & Wind Tingle Statue 
 #  Original item: 100 Rupees, reward for finding 2 Tingle Statues
 #  Paths:
 #    - rels/d_a_npc_tc.rel@6187
@@ -2278,46 +2295,62 @@ Tingle Island - Ankle - Reward for All Tingle Statues:
   Types: Misc
   Paths:
     - rels/d_a_npc_tc.rel@6143
-#Tingle Island - Tingle - Triforce Chart 1 Deciphered:
-#  Need: 
-#  Original item: Triforce Chart 1 got deciphered
-#  Paths:
-#    - rels/d_a_npc_tc.rel@61D7
-#Tingle Island - Tingle - Triforce Chart 2 Deciphered:
-#  Need: 
-#  Original item: Triforce Chart 2 got deciphered
-#  Paths:
-#    - rels/d_a_npc_tc.rel@61DF
-#Tingle Island - Tingle - Triforce Chart 3 Deciphered:
-#  Need: 
-#  Original item: Triforce Chart 3 got deciphered
-#  Paths:
-#    - rels/d_a_npc_tc.rel@61E7
-#Tingle Island - Tingle - Triforce Chart 4 Deciphered:
-#  Need: 
-#  Original item: Triforce Chart 4 got deciphered
-#  Paths:
-#    - rels/d_a_npc_tc.rel@61EF
-#Tingle Island - Tingle - Triforce Chart 5 Deciphered:
-#  Need: 
-#  Original item: Triforce Chart 5 got deciphered
-#  Paths:
-#    - rels/d_a_npc_tc.rel@61F7
-#Tingle Island - Tingle - Triforce Chart 6 Deciphered:
-#  Need: 
-#  Original item: Triforce Chart 6 got deciphered
-#  Paths:
-#    - rels/d_a_npc_tc.rel@61FF
-#Tingle Island - Tingle - Triforce Chart 7 Deciphered:
-#  Need: 
-#  Original item: Triforce Chart 7 got deciphered
-#  Paths:
-#    - rels/d_a_npc_tc.rel@6207
-#Tingle Island - Tingle - Triforce Chart 8 Deciphered:
-#  Need: 
-#  Original item: Triforce Chart 8 got deciphered
-#  Paths:
-#    - rels/d_a_npc_tc.rel@620F
+Tingle Island - Tingle - Triforce Chart 1 Deciphered:
+  Need: 
+    Triforce Chart 1
+  Original item: Triforce Chart 1 got deciphered
+  Types: Miscellaneous
+  Paths:
+    - rels/d_a_npc_tc.rel@61D7
+Tingle Island - Tingle - Triforce Chart 2 Deciphered:
+  Need: 
+    Triforce Chart 2
+  Original item: Triforce Chart 2 got deciphered
+  Types: Miscellaneous
+  Paths:
+    - rels/d_a_npc_tc.rel@61DF
+Tingle Island - Tingle - Triforce Chart 3 Deciphered:
+  Need: 
+    Triforce Chart 3
+  Original item: Triforce Chart 3 got deciphered
+  Types: Miscellaneous
+  Paths:
+    - rels/d_a_npc_tc.rel@61E7
+Tingle Island - Tingle - Triforce Chart 4 Deciphered:
+  Need: 
+    Triforce Chart 4
+  Original item: Triforce Chart 4 got deciphered
+  Types: Miscellaneous
+  Paths:
+    - rels/d_a_npc_tc.rel@61EF
+Tingle Island - Tingle - Triforce Chart 5 Deciphered:
+  Need: 
+    Triforce Chart 5
+  Original item: Triforce Chart 5 got deciphered
+  Types: Miscellaneous
+  Paths:
+    - rels/d_a_npc_tc.rel@61F7
+Tingle Island - Tingle - Triforce Chart 6 Deciphered:
+  Need: 
+    Triforce Chart 6
+  Original item: Triforce Chart 6 got deciphered
+  Types: Miscellaneous
+  Paths:
+    - rels/d_a_npc_tc.rel@61FF
+Tingle Island - Tingle - Triforce Chart 7 Deciphered:
+  Need: 
+    Triforce Chart 7
+  Original item: Triforce Chart 7 got deciphered
+  Types: Miscellaneous
+  Paths:
+    - rels/d_a_npc_tc.rel@6207
+Tingle Island - Tingle - Triforce Chart 8 Deciphered:
+  Need: 
+    Triforce Chart 8
+  Original item: Triforce Chart 8 got deciphered
+  Types: Miscellaneous
+  Paths:
+    - rels/d_a_npc_tc.rel@620F
 Tingle Island - Big Octo:
   Need: Can Defeat 12 Eye Big Octos & Grappling Hook
   Original item: Piece of Heart
